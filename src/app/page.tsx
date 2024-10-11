@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="">
       <Input />
-      <Button>Primary</Button>
+      <Button>Primary 123</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="destructive">Destructive</Button>
       <Button variant="ghost">ghost</Button>
