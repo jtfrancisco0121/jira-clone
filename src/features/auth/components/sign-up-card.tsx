@@ -23,17 +23,21 @@ import {
     FormItem,
     FormMessage,
 } from "@/components/ui/form";
+import { registerSchema } from "../schemas";
+import { useRegister } from "../api/use-register";
 
-const formSchema = z.object({
-    name: z.string().trim().min(1, "Required"),
-    email: z.string().email(),
-    password: z.string().min(8, "Minimum of 8 characters required")
-});
+// const formSchema = z.object({
+//     name: z.string().trim().min(1, "Required"),
+//     email: z.string().email(),
+//     password: z.string().min(8, "Minimum of 8 characters required")
+// });
 
 export const SignUpCard = () => {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const { mutate } = useRegister();
+
+    const form = useForm<z.infer<typeof registerSchema>>({
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             name: "",
             email: "",
@@ -41,8 +45,8 @@ export const SignUpCard = () => {
         }
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log({ values });
+    const onSubmit = (values: z.infer<typeof registerSchema>) => {
+        mutate({ json: values });
     }
 
     return (
@@ -117,7 +121,7 @@ export const SignUpCard = () => {
                             )}
                         />
                         <Button disabled={false} size="lg" className="w-full">
-                            Login
+                            Register
                         </Button>
                     </form>
                 </Form>
@@ -151,7 +155,7 @@ export const SignUpCard = () => {
             <CardContent className="p-7 flex items-center justify-center">
                 <p>
                     Already have an account?
-                    <Link href="/sign-up">
+                    <Link href="/sign-in">
                         <span className="text-blue-700">&nbsp;Sign In</span>
                     </Link>
                 </p>
